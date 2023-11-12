@@ -15,7 +15,7 @@ ChatGPT alike Google Chat using PaLM api ( v1 not v2 )
 
 [2] Write the scripts, copy paste from below template url :
 
-https://raw.githubusercontent.com/WingsMaker/chatgptbot/main/googleappscript.txt
+[https://raw.githubusercontent.com/WingsMaker/chatgptbot/main/googleappscript.txt](https://raw.githubusercontent.com/WingsMaker/googlechatgpt/main/googleappscript.txt)
 
 [3] Rename the project
 
