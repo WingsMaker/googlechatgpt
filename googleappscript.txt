@@ -1,0 +1,92 @@
+// see https://makersuite.google.com/app/home
+var apiKey = ".......";
+// see https://www.siteguarding.com/en/how-to-get-telegram-bot-api-token
+var token = "....."; 
+
+var weburi = "...."; 
+
+function doPost(e) {
+  var contents = JSON.parse(e.postData.contents);
+  var txt = "";  
+  if (contents.message) {
+    var id = contents.message.from.id;
+    var text = contents.message.text;    
+    if( text.startsWith("/") == false ) {
+      txt = palm_response(text);
+      sendMessage(id, txt);
+    }
+  }
+}
+
+function sendMessage(id, msg) {
+  var telegramUrl = "https://api.telegram.org/bot" + token + "/";
+  var data = {
+    method: "post",
+    payload: {
+      method: "sendMessage",
+      chat_id: String(id),
+      text: msg,
+      parse_mode: "HTML",
+
+    }
+  };
+  try {
+    var response = UrlFetchApp.fetch( telegramUrl, data);
+    var resp = response.getContentText().toString();
+  } 
+  catch ( e ) {
+    return ;
+  }
+}
+
+function palm_response(prompt_text) {
+  var apiKey = "AIzaSyCHNsZU2T8NYy_VTfOT1q9Bgow_y-Hp_ss";
+  var apiUrl = "https://generativelanguage.googleapis.com/v1beta2/models/text-bison-001:generateText";
+  var url = apiUrl + "?key=" + apiKey
+
+  var headers = {
+    "Content-Type": "application/json"
+  }
+
+  var prompt = {
+    'text': prompt_text
+  }
+
+  var requestBody = {
+    "prompt": prompt
+  }
+  var options = {
+    "method": "POST",
+    "headers": headers,
+    "payload": JSON.stringify(requestBody)
+  }
+
+  var response = UrlFetchApp.fetch(url, options);
+  var data = JSON.parse(response.getContentText());
+  var output = data.candidates[0].output;
+
+  return output;
+}
+
+function bot_info() {
+  var url = "https://api.telegram.org/bot" + token + "/getWebhookInfo";  
+  var response = UrlFetchApp.fetch(url);
+  var resp = response.getContentText().toString();
+  Logger.log(response);
+  return response;
+}
+
+function start_bot() {
+  var telegramUrl = "https://api.telegram.org/bot" + token;
+  var url = telegramUrl + "/setWebhook?url=https://script.google.com/macros/s/" + weburi  + "/exec";
+  var response = UrlFetchApp.fetch(url);  
+  Logger.log(response);
+  return response;
+}
+
+function stop_bot() {
+  var url = "https://api.telegram.org/bot" + token + "/deleteWebhook";
+  var response = UrlFetchApp.fetch(url);
+  Logger.log(response);
+  return response;
+}
