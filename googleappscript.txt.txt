@@ -1,5 +1,5 @@
 // see https://makersuite.google.com/app/home
-var apiKey = "AIzaSyCHNsZU2T8NYy_VTfOT1q9Bgow_y-Hp_ss";
+var apiKey = ".................";
 // see https://www.siteguarding.com/en/how-to-get-telegram-bot-api-token
 var token = "....."; 
 
