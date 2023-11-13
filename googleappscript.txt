@@ -40,7 +40,6 @@ function sendMessage(id, msg) {
 }
 
 function palm_response(prompt_text) {
-  var apiKey = "AIzaSyCHNsZU2T8NYy_VTfOT1q9Bgow_y-Hp_ss";
   var apiUrl = "https://generativelanguage.googleapis.com/v1beta2/models/text-bison-001:generateText";
   var url = apiUrl + "?key=" + apiKey
 
